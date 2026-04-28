@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FUFU来财 - 你的专属手串</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-light: #2d2d4e;
+            --accent: #c9a96e;
+            --accent-light: #e8d5b0;
+            --bg: #faf8f5;
+            --card-bg: #ffffff;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --success: #4caf50;
+            --shadow: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0 20px;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        .header .logo span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .header .back-btn {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            background: none;
+            border: 1px solid #e0dcd5;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Pages */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Size Selection */
+        .size-selection h2 {
+            font-size: 1.3rem;
+            margin: 16px 0 8px;
+            color: var(--primary);
+        }
+        .size-selection .desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+        .size-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .size-card {
+            flex: 1;
+            background: var(--card-bg);
+            border: 2px solid #e0dcd5;
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .size-card:hover { border-color: var(--accent); }
+        .size-card.selected {
+            border-color: var(--primary);
+            background: #f8f6f2;
+        }
+        .size-card .icon { font-size: 2rem; margin-bottom: 8px; }
+        .size-card .label { font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
+        .size-card .desc { font-size: 0.75rem; color: var(--text-light); }
+
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d4e 100%);
+            color: var(--accent-light);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 16px rgba(26,26,46,0.25);
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,26,46,0.3); }
+        .btn:active { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Bracelet Result */
+        .bracelet-result { text-align: center; padding: 20px 0; }
+        .bracelet-result h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 0 0 8px;
+        }
+        .bracelet-result .subtitle {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        /* Bracelet Visualization */
+        .bracelet-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 24px;
+        }
+        .bracelet-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border: 3px dashed var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        .bead {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bead:hover { transform: scale(1.1); box-shadow: var(--shadow-lg); }
+        .bead img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .bead.highlight {
+            border-color: var(--success);
+            animation: beadPop 0.3s ease;
+        }
+        @keyframes beadPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Bead Detail Panel */
+        .bead-detail {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        .bead-detail.show { display: block; }
+        .bead-detail h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        .bead-detail .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .bead-detail .tag {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background: #f5f0e8;
+            color: var(--accent);
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .bead-detail .desc {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Replacement Panel */
+        .replace-panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .replace-panel h4 {
+            margin: 0 0 12px;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+        .replace-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .replace-bead {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #e0dcd5;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .replace-bead:hover { border-color: var(--accent); transform: scale(1.1); }
+        .replace-bead.selected { border-color: var(--success); box-shadow: 0 0 0 2px var(--success); }
+        .replace-bead img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .actions .btn { max-width: 160px; font-size: 0.85rem; padding: 12px 20px; }
+        .actions .btn.secondary {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            box-shadow: none;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container { padding: 32px; }
+            .bracelet-container { width: 340px; height: 340px; }
+            .bracelet-ring { width: 260px; height: 260px; }
+            .bead { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <img src="logo.jpg" alt="FUFU">
+                <span>FUFU来财</span>
+            </div>
+            <button class="back-btn" onclick="goBack()">返回</button>
+        </div>
+
+        <!-- Size Selection Page -->
+        <div id="sizePage" class="page active">
+            <div class="size-selection">
+                <h2>选择你的手串尺寸</h2>
+                <p class="desc">根据你的手腕大小，推荐最适合的珠子数量</p>
+                <div class="size-options">
+                    <div class="size-card" onclick="selectSize('S', 12, this)">
+                        <div class="icon">🤏</div>
+                        <div class="label">精致款</div>
+                        <div class="desc">12颗珠子 · 适合细手腕</div>
+                    </div>
+                    <div class="size-card" onclick="selectSize('M', 14, this)">
+                        <div class="icon">👌</div>
+                        <div class="label">标准款</div>
+                        <div class="desc">14颗珠子 · 大多数人适合</div>
+                    </div>
+                    <div class="size-card" onclick="selectSize('L', 16, this)">
+                        <div class="icon">💪</div>
+                        <div class="label">大气款</div>
+                        <div class="desc">16颗珠子 · 适合粗手腕</div>
+                    </div>
+                </div>
+                <button class="btn" id="generateBtn" disabled onclick="generateBracelet()">生成专属手串</button>
+            </div>
+        </div>
+
+        <!-- Bracelet Result Page -->
+        <div id="braceletPage" class="page">
+            <div class="bracelet-result">
+                <h2>你的专属手串</h2>
+                <p class="subtitle">点击珠子可以替换成同功效的其他选择</p>
+
+                <div class="bracelet-container">
+                    <div class="bracelet-ring"></div>
+                    <div id="beadsContainer"></div>
+                </div>
+
+                <div class="bead-detail" id="beadDetail">
+                    <h4 id="beadName"></h4>
+                    <div class="tags" id="beadTags"></div>
+                    <p class="desc" id="beadDesc"></p>
+                </div>
+
+                <div class="replace-panel" id="replacePanel" style="display:none;">
+                    <h4>替换为其他珠子</h4>
+                    <div class="replace-options" id="replaceOptions"></div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn secondary" onclick="resetSelection()">重新选择</button>
+                    <button class="btn" onclick="confirmBracelet()">确认这串</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 珠子数据库
+        const beadsDB = [
+            {
+                id: 'wealth',
+                name: '招财聚气珠',
+                image: '招财聚气.jpg',
+                tags: ['招财', '聚气', '财运'],
+                effects: ['wealth', 'career'],
+                desc: '黄水晶与绿幽灵搭配，主招财聚气，适合事业上升期佩戴。',
+                color: '#e8c84a'
+            },
+            {
+                id: 'noble',
+                name: '招财招贵人珠',
+                image: '招财招贵人.jpg',
+                tags: ['招财', '贵人', '人脉'],
+                effects: ['wealth', 'people'],
+                desc: '紫锂辉搭配金发晶，招正财的同时吸引贵人相助。',
+                color: '#c9a0dc'
+            },
+            {
+                id: 'confidence',
+                name: '自信招财珠',
+                image: '自信招财.jpg',
+                tags: ['自信', '招财', '气场'],
+                effects: ['confidence', 'wealth'],
+                desc: '钛水晶能量强劲，提升个人气场与自信心，招偏财。',
+                color: '#d4a574'
+            },
+            {
+                id: 'career',
+                name: '事业成长珠',
+                image: '事业成长.jpg',
+                tags: ['事业', '成长', '突破'],
+                effects: ['career', 'execution'],
+                desc: '绿发晶助事业运，打破瓶颈，开拓新的可能。',
+                color: '#5cb85c'
+            },
+            {
+                id: 'execution',
+                name: '提升执行力珠',
+                image: '提升执行力.jpg',
+                tags: ['执行力', '行动', '效率'],
+                effects: ['execution', 'steady-wealth'],
+                desc: '红玛瑙搭配虎眼石，增强行动力与决断力。',
+                color: '#c0392b'
+            },
+            {
+                id: 'purify',
+                name: '净化负能量珠',
+                image: '净化负能量.jpg',
+                tags: ['净化', '清心', '平和'],
+                effects: ['purify', 'confidence'],
+                desc: '白水晶能量纯净，净化负面能量，回归内心平静。',
+                color: '#f0f0f0'
+            },
+            {
+                id: 'confidence2',
+                name: '提升自信珠',
+                image: '提升自信.jpg',
+                tags: ['自信', '从容', '能量'],
+                effects: ['confidence', 'people'],
+                desc: '太阳石阳光能量，驱散怯懦，提升自信与勇气。',
+                color: '#f39c12'
+            },
+            {
+                id: 'protect',
+                name: '防小人珠',
+                image: '防小人.jpg',
+                tags: ['防小人', '辟邪', '守护'],
+                effects: ['protect', 'steady-wealth'],
+                desc: '黑曜石辟邪挡煞，防小人暗算，守护正财。',
+                color: '#2c2c2c'
+            },
+            {
+                id: 'protect2',
+                name: '防小人加强珠',
+                image: '防小人 2.jpg',
+                tags: ['防小人', '辟邪', '强力守护'],
+                effects: ['protect', 'purify'],
+                desc: '黑发晶+黑玛瑙双重守护，强力辟邪防小人。',
+                color: '#1a1a1a'
+            },
+            {
+                id: 'people',
+                name: '聚好人缘珠',
+                image: '聚好人缘.jpg',
+                tags: ['人缘', '桃花', '社交'],
+                effects: ['people', 'confidence'],
+                desc: '粉水晶招人缘桃花，提升亲和力与社交运。',
+                color: '#f7b4b4'
+            },
+            {
+                id: 'steady',
+                name: '稳财守运珠',
+                image: '稳财守运.jpg',
+                tags: ['守财', '稳定', '安心'],
+                effects: ['steady-wealth', 'protect'],
+                desc: '金发晶+茶晶守财库，稳住已有财富与运势。',
+                color: '#8b7355'
+            },
+            {
+                id: 'guard',
+                name: '气场守财珠',
+                image: '气场守财.jpg',
+                tags: ['气场', '守财', '镇宅'],
+                effects: ['protect-wealth', 'confidence'],
+                desc: '黄虎眼石增强气场，守住财库不漏财。',
+                color: '#b8860b'
+            }
+        ];
+
+        // 状态管理
+        let selectedSize = null;
+        let beadCount = 12;
+        let currentBracelet = []; // 当前手串的珠子数组
+        let selectedBeadIndex = -1; // 当前选中的珠子索引
+
+        // 选择尺寸
+        function selectSize(size, count, element) {
+            selectedSize = size;
+            beadCount = count;
+            document.querySelectorAll('.size-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('generateBtn').disabled = false;
+        }
+
+        // 生成手串
+        function generateBracelet() {
+            // 模拟根据答题结果推荐珠子（后续可以接入真实答题数据）
+            // 这里用一个简单的推荐算法：从12种珠子中选出匹配度最高的
+            const recommended = getRecommendedBeads(beadCount);
+            currentBracelet = recommended;
+            renderBracelet();
+
+            // 切换到结果页
+            document.getElementById('sizePage').classList.remove('active');
+            document.getElementById('braceletPage').classList.add('active');
+        }
+
+        // 推荐算法（简化版）
+        function getRecommendedBeads(count) {
+            // 模拟推荐权重（后续替换为真实答题数据）
+            const weights = {};
+            beadsDB.forEach(bead => {
+                weights[bead.id] = Math.random() * 3 + 1; // mock权重
+            });
+
+            // 按权重排序，取前count个
+            const sorted = [...beadsDB].sort((a, b) => weights[b.id] - weights[a.id]);
+            const selected = sorted.slice(0, count);
+
+            return selected;
+        }
+
+        // 渲染手串
+        function renderBracelet() {
+            const container = document.getElementById('beadsContainer');
+            container.innerHTML = '';
+
+            const ringRadius = window.innerWidth >= 768 ? 130 : 110;
+            const centerX = window.innerWidth >= 768 ? 170 : 140;
+            const centerY = window.innerWidth >= 768 ? 170 : 140;
+
+            currentBracelet.forEach((bead, index) => {
+                const angle = (index / currentBracelet.length) * 2 * Math.PI - Math.PI / 2;
+                const x = centerX + ringRadius * Math.cos(angle) - 26;
+                const y = centerY + ringRadius * Math.sin(angle) - 26;
+
+                const beadEl = document.createElement('div');
+                beadEl.className = 'bead';
+                beadEl.style.left = x + 'px';
+                beadEl.style.top = y + 'px';
+                beadEl.innerHTML = `<img src="${bead.image}" alt="${bead.name}" loading="lazy">`;
+                beadEl.onclick = () => selectBead(index);
+                container.appendChild(beadEl);
+            });
+        }
+
+        // 选中珠子
+        function selectBead(index) {
+            selectedBeadIndex = index;
+            const bead = currentBracelet[index];
+
+            // 显示珠子详情
+            const detail = document.getElementById('beadDetail');
+            detail.classList.add('show');
+            document.getElementById('beadName').textContent = bead.name;
+            document.getElementById('beadTags').innerHTML = bead.tags.map(t => `<span class="tag">${t}</span>`).join('');
+            document.getElementById('beadDesc').textContent = bead.desc;
+
+            // 显示替换选项
+            const replacePanel = document.getElementById('replacePanel');
+            const replaceOptions = document.getElementById('replaceOptions');
+            replacePanel.style.display = 'block';
+
+            // 找出同功效的其他珠子
+            const alternatives = beadsDB.filter(b =>
+                b.id !== bead.id &&
+                b.effects.some(e => bead.effects.includes(e))
+            ).slice(0, 6);
+
+            replaceOptions.innerHTML = alternatives.map(b =>
+                `<div class="replace-bead" onclick="replaceBead('${b.id}')" title="${b.name}">
+                    <img src="${b.image}" alt="${b.name}" loading="lazy">
+                </div>`
+            ).join('');
+
+            // 高亮选中的珠子
+            document.querySelectorAll('.bead').forEach((el, i) => {
+                el.classList.toggle('highlight', i === index);
+            });
+        }
+
+        // 替换珠子
+        function replaceBead(beadId) {
+            if (selectedBeadIndex === -1) return;
+
+            const newBead = beadsDB.find(b => b.id === beadId);
+            if (!newBead) return;
+
+            currentBracelet[selectedBeadIndex] = newBead;
+            renderBracelet();
+
+            // 重新选中替换后的珠子
+            selectBead(selectedBeadIndex);
+        }
+
+        // 重新选择
+        function resetSelection() {
+            document.getElementById('braceletPage').classList.remove('active');
+            document.getElementById('sizePage').classList.add('active');
+            document.getElementById('beadDetail').classList.remove('show');
+            document.getElementById('replacePanel').style.display = 'none';
+            selectedBeadIndex = -1;
+        }
+
+        // 确认手串
+        function confirmBracelet() {
+            const beadNames = currentBracelet.map(b => b.name).join(' + ');
+            alert('手串已确认！\n包含：' + beadNames + '\n\n（后续可接入下单流程）');
+        }
+
+        // 返回
+        function goBack() {
+            if (document.getElementById('braceletPage').classList.contains('active')) {
+                resetSelection();
+            } else {
+                history.back();
+            }
+        }
+    </script>
+</body>
+</html>
