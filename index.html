@@ -162,19 +162,28 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--accent);
-            background: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid rgba(201,169,110,0.6);
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow:
+                inset -4px -4px 8px rgba(0,0,0,0.2),
+                inset 4px 4px 8px rgba(255,255,255,0.3),
+                0 2px 8px rgba(0,0,0,0.15);
         }
-        .bead:hover { transform: scale(1.1); box-shadow: var(--shadow-lg); }
-        .bead img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .bead::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 8px;
+            width: 16px;
+            height: 10px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: rotate(-20deg);
         }
+        .bead:hover { transform: scale(1.12); box-shadow:
+                inset -4px -4px 8px rgba(0,0,0,0.2),
+                inset 4px 4px 8px rgba(255,255,255,0.3),
+                0 4px 16px rgba(0,0,0,0.25); }
         .bead.highlight {
             border-color: var(--success);
             animation: beadPop 0.3s ease;
@@ -243,14 +252,26 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            overflow: hidden;
             border: 2px solid #e0dcd5;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow:
+                inset -4px -4px 8px rgba(0,0,0,0.2),
+                inset 4px 4px 8px rgba(255,255,255,0.3),
+                0 2px 6px rgba(0,0,0,0.1);
+        }
+        .replace-bead::before {
+            content: '';
+            position: absolute;
+            top: 7px; left: 9px;
+            width: 14px;
+            height: 8px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: rotate(-20deg);
         }
         .replace-bead:hover { border-color: var(--accent); transform: scale(1.1); }
         .replace-bead.selected { border-color: var(--success); box-shadow: 0 0 0 2px var(--success); }
-        .replace-bead img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Action Buttons */
         .actions {
@@ -349,110 +370,110 @@
             {
                 id: 'wealth',
                 name: '招财聚气珠',
-                image: '招财聚气.jpg',
                 tags: ['招财', '聚气', '财运'],
                 effects: ['wealth', 'career'],
                 desc: '黄水晶与绿幽灵搭配，主招财聚气，适合事业上升期佩戴。',
-                color: '#e8c84a'
+                gradient: 'radial-gradient(circle at 35% 30%, #fff3a8, #e8c84a 40%, #c9a832 70%, #a8892a)',
+                texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 8deg, rgba(255,255,255,0.08) 8deg 10deg)'
             },
             {
                 id: 'noble',
                 name: '招财招贵人珠',
-                image: '招财招贵人.jpg',
                 tags: ['招财', '贵人', '人脉'],
                 effects: ['wealth', 'people'],
                 desc: '紫锂辉搭配金发晶，招正财的同时吸引贵人相助。',
-                color: '#c9a0dc'
+                gradient: 'radial-gradient(circle at 35% 30%, #e8d0f0, #c9a0dc 40%, #a878c8 70%, #8a5aa8)',
+                texture: 'repeating-conic-gradient(from 45deg, transparent 0deg 12deg, rgba(255,255,255,0.06) 12deg 15deg)'
             },
             {
                 id: 'confidence',
                 name: '自信招财珠',
-                image: '自信招财.jpg',
                 tags: ['自信', '招财', '气场'],
                 effects: ['confidence', 'wealth'],
                 desc: '钛水晶能量强劲，提升个人气场与自信心，招偏财。',
-                color: '#d4a574'
+                gradient: 'radial-gradient(circle at 35% 30%, #f0dcc0, #d4a574 40%, #b8885a 70%, #9a6e42)',
+                texture: 'repeating-conic-gradient(from 30deg, transparent 0deg 6deg, rgba(255,255,255,0.1) 6deg 8deg)'
             },
             {
                 id: 'career',
                 name: '事业成长珠',
-                image: '事业成长.jpg',
                 tags: ['事业', '成长', '突破'],
                 effects: ['career', 'execution'],
                 desc: '绿发晶助事业运，打破瓶颈，开拓新的可能。',
-                color: '#5cb85c'
+                gradient: 'radial-gradient(circle at 35% 30%, #b8e8b8, #5cb85c 40%, #4a9a4a 70%, #387a38)',
+                texture: 'repeating-conic-gradient(from 60deg, transparent 0deg 10deg, rgba(255,255,255,0.08) 10deg 12deg)'
             },
             {
                 id: 'execution',
                 name: '提升执行力珠',
-                image: '提升执行力.jpg',
                 tags: ['执行力', '行动', '效率'],
                 effects: ['execution', 'steady-wealth'],
                 desc: '红玛瑙搭配虎眼石，增强行动力与决断力。',
-                color: '#c0392b'
+                gradient: 'radial-gradient(circle at 35% 30%, #f0a8a8, #c0392b 40%, #a83224 70%, #8a2a1c)',
+                texture: 'repeating-conic-gradient(from 15deg, transparent 0deg 8deg, rgba(255,255,255,0.06) 8deg 10deg)'
             },
             {
                 id: 'purify',
                 name: '净化负能量珠',
-                image: '净化负能量.jpg',
                 tags: ['净化', '清心', '平和'],
                 effects: ['purify', 'confidence'],
                 desc: '白水晶能量纯净，净化负面能量，回归内心平静。',
-                color: '#f0f0f0'
+                gradient: 'radial-gradient(circle at 35% 30%, #ffffff, #f0f4f8 30%, #d8e4ec 60%, #c0d0dc)',
+                texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 15deg, rgba(255,255,255,0.15) 15deg 18deg)'
             },
             {
                 id: 'confidence2',
                 name: '提升自信珠',
-                image: '提升自信.jpg',
                 tags: ['自信', '从容', '能量'],
                 effects: ['confidence', 'people'],
                 desc: '太阳石阳光能量，驱散怯懦，提升自信与勇气。',
-                color: '#f39c12'
+                gradient: 'radial-gradient(circle at 35% 30%, #ffe8b0, #f39c12 40%, #d88a0e 70%, #b8720a)',
+                texture: 'repeating-conic-gradient(from 20deg, transparent 0deg 5deg, rgba(255,255,255,0.12) 5deg 7deg)'
             },
             {
                 id: 'protect',
                 name: '防小人珠',
-                image: '防小人.jpg',
                 tags: ['防小人', '辟邪', '守护'],
                 effects: ['protect', 'steady-wealth'],
                 desc: '黑曜石辟邪挡煞，防小人暗算，守护正财。',
-                color: '#2c2c2c'
+                gradient: 'radial-gradient(circle at 35% 30%, #5a5a5a, #2c2c2c 40%, #1a1a1a 70%, #0d0d0d)',
+                texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255,255,255,0.03) 20deg 22deg)'
             },
             {
                 id: 'protect2',
                 name: '防小人加强珠',
-                image: '防小人 2.jpg',
                 tags: ['防小人', '辟邪', '强力守护'],
                 effects: ['protect', 'purify'],
                 desc: '黑发晶+黑玛瑙双重守护，强力辟邪防小人。',
-                color: '#1a1a1a'
+                gradient: 'radial-gradient(circle at 35% 30%, #4a4040, #1a1218 40%, #0d0a0c 70%, #050406)',
+                texture: 'repeating-conic-gradient(from 90deg, transparent 0deg 4deg, rgba(255,255,255,0.05) 4deg 6deg)'
             },
             {
                 id: 'people',
                 name: '聚好人缘珠',
-                image: '聚好人缘.jpg',
                 tags: ['人缘', '桃花', '社交'],
                 effects: ['people', 'confidence'],
                 desc: '粉水晶招人缘桃花，提升亲和力与社交运。',
-                color: '#f7b4b4'
+                gradient: 'radial-gradient(circle at 35% 30%, #ffe0e8, #f7b4b4 40%, #e89898 70%, #d87a7a)',
+                texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 18deg, rgba(255,255,255,0.1) 18deg 20deg)'
             },
             {
                 id: 'steady',
                 name: '稳财守运珠',
-                image: '稳财守运.jpg',
                 tags: ['守财', '稳定', '安心'],
                 effects: ['steady-wealth', 'protect'],
                 desc: '金发晶+茶晶守财库，稳住已有财富与运势。',
-                color: '#8b7355'
+                gradient: 'radial-gradient(circle at 35% 30%, #c8b898, #8b7355 40%, #705a42 70%, #584230)',
+                texture: 'repeating-conic-gradient(from 45deg, transparent 0deg 7deg, rgba(255,255,255,0.08) 7deg 9deg)'
             },
             {
                 id: 'guard',
                 name: '气场守财珠',
-                image: '气场守财.jpg',
                 tags: ['气场', '守财', '镇宅'],
                 effects: ['protect-wealth', 'confidence'],
                 desc: '黄虎眼石增强气场，守住财库不漏财。',
-                color: '#b8860b'
+                gradient: 'radial-gradient(circle at 35% 30%, #e8c868, #b8860b 40%, #9a7008 70%, #7a5806)',
+                texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 3deg, rgba(184,134,11,0.3) 3deg 6deg, transparent 6deg 9deg)'
             }
         ];
 
@@ -517,7 +538,11 @@
                 beadEl.className = 'bead';
                 beadEl.style.left = x + 'px';
                 beadEl.style.top = y + 'px';
-                beadEl.innerHTML = `<img src="${bead.image}" alt="${bead.name}" loading="lazy">`;
+                beadEl.style.background = bead.gradient;
+                // Add texture overlay
+                const textureEl = document.createElement('div');
+                textureEl.style.cssText = `position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;background:${bead.texture};pointer-events:none;`;
+                beadEl.appendChild(textureEl);
                 beadEl.onclick = () => selectBead(index);
                 container.appendChild(beadEl);
             });
@@ -547,8 +572,8 @@
             ).slice(0, 6);
 
             replaceOptions.innerHTML = alternatives.map(b =>
-                `<div class="replace-bead" onclick="replaceBead('${b.id}')" title="${b.name}">
-                    <img src="${b.image}" alt="${b.name}" loading="lazy">
+                `<div class="replace-bead" onclick="replaceBead('${b.id}')" title="${b.name}" style="background:${b.gradient};position:relative;">
+                    <div style="position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;background:${b.texture};pointer-events:none;"></div>
                 </div>`
             ).join('');
 
