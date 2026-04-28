@@ -355,13 +355,7 @@
                         { id: 'amethyst', name: '紫水晶', tags: ['人缘', '贵人', '智慧'], effects: ['people', 'purify'], desc: '紫水晶助人缘、贵人提携，开启智慧与灵性。', image: 'amethyst.png', size: 1.0 },
                         { id: 'aquamarine', name: '蓝纹玛瑙', tags: ['沉静', '稳定', '思绪'], effects: ['purify', 'confidence'], desc: '蓝纹玛瑙带来沉静与稳定思绪，缓解焦虑。', image: 'aquamarine.png', size: 0.95 },
                         { id: 'obsidian', name: '银曜', tags: ['避邪', '防小人', '守护'], effects: ['protect', 'purify'], desc: '银曜石强力避邪防小人，守护正能量。', image: 'obsidian.png', size: 0.9 },
-                        { id: 'rhodonite', name: '相片石', tags: ['希望', '信念', '勇气'], effects: ['confidence', 'people'], desc: '相片石（蔷薇辉石）带来希望与信念，增强勇气。', image: 'rhodonite.png', size: 1.0 },
-                        { id: 'tiger-eye', name: '海藻玉', tags: ['愉悦', '觉醒', '放松'], effects: ['confidence', 'steady-wealth'], desc: '海藻玉（虎眼石）带来愉悦与觉醒感，帮助放松。', image: 'tiger-eye.png', size: 1.05 },
-                        { id: 'sapphire', name: '蓝青石', tags: ['智慧', '纯净', '平衡'], effects: ['purify', 'career'], desc: '蓝青石助智慧开启，保持内心纯净与平衡。', image: 'sapphire.png', size: 0.95 },
-                        { id: 'strawberry', name: '草莓晶', tags: ['正缘', '正能量', '爱情'], effects: ['people', 'confidence'], desc: '草莓晶招正缘桃花，带来满满正能量。', image: 'strawberry.png', size: 1.0 },
-                        { id: 'moonstone', name: '月光石', tags: ['细腻', '疗愈', '直觉'], effects: ['purify', 'people'], desc: '月光石带来细腻疗愈之力，增强直觉与灵感。', image: 'moonstone.png', size: 1.0 },
-                        { id: 'jade', name: '翠晶', tags: ['招财', '果断', '自信'], effects: ['wealth', 'confidence'], desc: '翠晶（翡翠）主招财果断，增强自信与气场。', image: 'jade.png', size: 1.0 },
-            { id: 'rosequartz', name: '粉晶', tags: ['魅力', '招桃花', '人缘'], effects: ['people', 'confidence'], desc: '粉晶招桃花、提升个人魅力与人缘。', gradient: 'radial-gradient(circle at 35% 30%, #ffe0e8, #f7b4b4 40%, #e89898 70%, #d87a7a)', texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 18deg, rgba(255,255,255,0.1) 18deg 20deg)', size: 1.0 }
+                        { id: 'tiger-eye', name: '海藻玉', tags: ['愉悦', '觉醒', '放松'], effects: ['confidence', 'steady-wealth'], desc: '海藻玉（虎眼石）带来愉悦与觉醒感，帮助放松。', image: 'tiger-eye.png', size: 1.05 }
         ];
 
         // ========== 题目配置（从旧版导入） ==========
@@ -376,11 +370,11 @@
                     { icon: '😫', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
                 ],
                 mapping: {
-                    'anxiety': ['moonstone', 'obsidian', 'aquamarine'],
-                    'money': ['jade', 'rosequartz', 'tiger-eye'],
-                    'obstacle': ['obsidian', 'aquamarine', 'sapphire'],
-                    'lost': ['rosequartz', 'sapphire', 'amethyst'],
-                    'tired': ['moonstone', 'aquamarine', 'amethyst']
+                    'anxiety': ['obsidian', 'aquamarine'],
+                    'money': ['tiger-eye'],
+                    'obstacle': ['obsidian', 'aquamarine'],
+                    'lost': ['amethyst'],
+                    'tired': ['aquamarine', 'amethyst']
                 }
             },
             {
@@ -392,10 +386,10 @@
                     { icon: '😤', label: '遇到不讲理的人', desc: '被气到不想说话', value: 'angry' }
                 ],
                 mapping: {
-                    'social': ['amethyst', 'moonstone', 'obsidian'],
-                    'work': ['sapphire', 'jade', 'rosequartz'],
-                    'overthink': ['moonstone', 'aquamarine', 'obsidian'],
-                    'angry': ['obsidian', 'aquamarine', 'rosequartz']
+                    'social': ['amethyst', 'obsidian'],
+                    'work': ['aquamarine'],
+                    'overthink': ['aquamarine', 'obsidian'],
+                    'angry': ['obsidian', 'aquamarine']
                 }
             },
             {
@@ -407,10 +401,10 @@
                     { icon: '📋', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
                 ],
                 mapping: {
-                    'F': ['amethyst', 'moonstone', 'rosequartz'],
-                    'T': ['sapphire', 'jade', 'aquamarine'],
-                    'N': ['moonstone', 'rosequartz', 'sapphire'],
-                    'S': ['tiger-eye', 'jade', 'obsidian']
+                    'F': ['amethyst'],
+                    'T': ['aquamarine'],
+                    'N': ['aquamarine'],
+                    'S': ['tiger-eye', 'obsidian']
                 }
             },
             {
@@ -423,11 +417,11 @@
                     { icon: '💗', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
                 ],
                 mapping: {
-                    'rich': ['jade', 'rosequartz', 'tiger-eye', 'aquamarine'],
-                    'success': ['sapphire', 'amethyst', 'jade'],
-                    'safe': ['obsidian', 'aquamarine', 'moonstone'],
-                    'happy': ['rosequartz', 'moonstone', 'amethyst'],
-                    'love': ['amethyst', 'rosequartz', 'rhodonite']
+                    'rich': ['tiger-eye', 'aquamarine'],
+                    'success': ['amethyst'],
+                    'safe': ['obsidian', 'aquamarine'],
+                    'happy': ['amethyst'],
+                    'love': ['amethyst']
                 }
             },
             {
@@ -439,10 +433,10 @@
                     { icon: '🧊', label: '冷静平稳', desc: '情绪稳定，但缺少激情', value: 'calm' }
                 ],
                 mapping: {
-                    'high': ['jade', 'rosequartz', 'sapphire'],
-                    'fluctuate': ['aquamarine', 'moonstone', 'tiger-eye'],
-                    'low': ['rosequartz', 'sapphire', 'amethyst'],
-                    'calm': ['moonstone', 'aquamarine', 'amethyst']
+                    'high': ['tiger-eye'],
+                    'fluctuate': ['aquamarine', 'tiger-eye'],
+                    'low': ['amethyst'],
+                    'calm': ['aquamarine', 'amethyst']
                 }
             },
             {
@@ -455,11 +449,11 @@
                     { icon: '✨', label: '闪耀', desc: '被看见、发光发热', value: 'shine' }
                 ],
                 mapping: {
-                    'flow': ['moonstone', 'amethyst', 'aquamarine'],
-                    'burn': ['sapphire', 'rosequartz', 'jade'],
-                    'grow': ['amethyst', 'rhodonite', 'rosequartz'],
+                    'flow': ['amethyst', 'aquamarine'],
+                    'burn': ['tiger-eye'],
+                    'grow': ['amethyst'],
                     'stable': ['tiger-eye', 'aquamarine', 'obsidian'],
-                    'shine': ['rosequartz', 'rosequartz', 'sapphire']
+                    'shine': ['tiger-eye']
                 }
             }
         ];
