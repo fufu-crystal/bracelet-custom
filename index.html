@@ -192,14 +192,17 @@
             align-items: center;
             gap: 6px;
         }
+        .bead-pool-wrapper {
+            max-height: 160px;
+            overflow-y: auto;
+            padding: 4px;
+        }
         .bead-pool {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
-            max-height: 160px;
-            overflow-y: auto;
-            padding: 8px 4px;
+            overflow: visible;
         }
         .pool-bead {
             border-radius: 50%;
@@ -358,7 +361,9 @@
                 </div>
                 <div class="bead-pool-section">
                     <h4>💎 备选珠子池</h4>
-                    <div class="bead-pool" id="beadPool"></div>
+                    <div class="bead-pool-wrapper">
+                        <div class="bead-pool" id="beadPool"></div>
+                    </div>
                 </div>
             </div>
         </div>
