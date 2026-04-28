@@ -152,23 +152,13 @@
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.2), inset 3px 3px 6px rgba(255,255,255,0.3), 0 2px 6px rgba(0,0,0,0.12);
-        }
-        .bead-slot::before {
-            content: '';
-            position: absolute;
-            top: 15%; left: 20%;
-            width: 30%; height: 20%;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.65) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: rotate(-20deg);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
         .bead-slot.empty {
             background: #f0ece7 !important;
             border: 2px dashed #c8c0b5;
             box-shadow: none;
         }
-        .bead-slot.empty::before { display: none; }
         .bead-slot:hover { transform: scale(1.12); }
         .bead-slot.highlight { border: 2px solid var(--success); animation: beadPop 0.3s ease; }
         @keyframes beadPop {
@@ -208,19 +198,9 @@
             border-radius: 50%;
             cursor: grab;
             transition: all 0.2s;
-            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.2), inset 3px 3px 6px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
             touch-action: none;
-        }
-        .pool-bead::before {
-            content: '';
-            position: absolute;
-            top: 15%; left: 20%;
-            width: 30%; height: 20%;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: rotate(-20deg);
-            pointer-events: none;
         }
         .pool-bead:hover { transform: scale(1.15); z-index: 10; }
         .pool-bead:active { cursor: grabbing; }
@@ -372,15 +352,15 @@
     <script>
         // ========== 珠子数据库 ==========
         const beadsDB = [
-            { id: 'amethyst', name: '紫水晶', tags: ['人缘', '贵人', '智慧'], effects: ['people', 'purify'], desc: '紫水晶助人缘、贵人提携，开启智慧与灵性。', gradient: 'radial-gradient(circle at 35% 30%, #d8b4e8, #9b59b6 40%, #7d3c98 70%, #5b2c6f)', texture: 'repeating-conic-gradient(from 45deg, transparent 0deg 12deg, rgba(255,255,255,0.08) 12deg 15deg)', size: 1.0 },
-            { id: 'aquamarine', name: '藍紋瑪瑙', tags: ['沉静', '稳定', '思绪'], effects: ['purify', 'confidence'], desc: '蓝纹玛瑙带来沉静与稳定思绪，缓解焦虑。', gradient: 'radial-gradient(circle at 35% 30%, #d6eaf8, #85c1e9 40%, #5dade2 70%, #3498db)', texture: 'repeating-conic-gradient(from 30deg, transparent 0deg 15deg, rgba(255,255,255,0.1) 15deg 18deg)', size: 0.95 },
-            { id: 'obsidian', name: '銀曜', tags: ['避邪', '防小人', '守护'], effects: ['protect', 'purify'], desc: '银曜石强力避邪防小人，守护正能量。', gradient: 'radial-gradient(circle at 35% 30%, #5a5a5a, #2c2c2c 40%, #1a1a1a 70%, #0d0d0d)', texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255,255,255,0.03) 20deg 22deg)', size: 0.9 },
-            { id: 'rhodonite', name: '相片石', tags: ['希望', '信念', '勇气'], effects: ['confidence', 'people'], desc: '相片石（蔷薇辉石）带来希望与信念，增强勇气。', gradient: 'radial-gradient(circle at 35% 30%, #f5d0d0, #e8a0a0 40%, #d48080 70%, #b86060)', texture: 'repeating-conic-gradient(from 60deg, transparent 0deg 8deg, rgba(0,0,0,0.05) 8deg 10deg)', size: 1.0 },
-            { id: 'tiger-eye', name: '海藻玉', tags: ['愉悦', '觉醒', '放鬆'], effects: ['confidence', 'steady-wealth'], desc: '海藻玉（虎眼石）带来愉悦与觉醒感，帮助放鬆。', gradient: 'radial-gradient(circle at 35% 30%, #e8c868, #b8860b 40%, #9a7008 70%, #7a5806)', texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 3deg, rgba(184,134,11,0.3) 3deg 6deg, transparent 6deg 9deg)', size: 1.05 },
-            { id: 'sapphire', name: '藍青石', tags: ['智慧', '纯净', '平衡'], effects: ['purify', 'career'], desc: '蓝青石助智慧开启，保持内心纯净与平衡。', gradient: 'radial-gradient(circle at 35% 30%, #5a5a8a, #2c2c5c 40%, #1a1a3a 70%, #0d0d1a)', texture: 'repeating-conic-gradient(from 90deg, transparent 0deg 10deg, rgba(255,255,255,0.05) 10deg 12deg)', size: 0.95 },
-            { id: 'strawberry', name: '草莓晶', tags: ['正缘', '正能量', '爱情'], effects: ['people', 'confidence'], desc: '草莓晶招正缘桃花，带来满满正能量。', gradient: 'radial-gradient(circle at 35% 30%, #ffe0e0, #f5a0a0 40%, #e87878 70%, #d85858)', texture: 'repeating-conic-gradient(from 20deg, transparent 0deg 5deg, rgba(200,50,50,0.15) 5deg 7deg)', size: 1.0 },
-            { id: 'moonstone', name: '月光石', tags: ['细腻', '療愈', '直觉'], effects: ['purify', 'people'], desc: '月光石带来细腻療愈之力，增强直觉与灵感。', gradient: 'radial-gradient(circle at 35% 30%, #f8f8ff, #d8d8e8 40%, #b8b8c8 70%, #9898a8)', texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 18deg, rgba(255,255,255,0.15) 18deg 20deg)', size: 1.0 },
-            { id: 'jade', name: '翠晶', tags: ['招财', '果断', '自信'], effects: ['wealth', 'confidence'], desc: '翠晶（翡翠）主招财果断，增强自信与气场。', gradient: 'radial-gradient(circle at 35% 30%, #b8e8b8, #5cb85c 40%, #4a9a4a 70%, #387a38)', texture: 'repeating-conic-gradient(from 60deg, transparent 0deg 10deg, rgba(255,255,255,0.08) 10deg 12deg)', size: 1.0 },
+                        { id: 'amethyst', name: '紫水晶', tags: ['人缘', '贵人', '智慧'], effects: ['people', 'purify'], desc: '紫水晶助人缘、贵人提携，开启智慧与灵性。', image: 'amethyst.png', size: 1.0 },
+                        { id: 'aquamarine', name: '蓝纹玛瑙', tags: ['沉静', '稳定', '思绪'], effects: ['purify', 'confidence'], desc: '蓝纹玛瑙带来沉静与稳定思绪，缓解焦虑。', image: 'aquamarine.png', size: 0.95 },
+                        { id: 'obsidian', name: '银曜', tags: ['避邪', '防小人', '守护'], effects: ['protect', 'purify'], desc: '银曜石强力避邪防小人，守护正能量。', image: 'obsidian.png', size: 0.9 },
+                        { id: 'rhodonite', name: '相片石', tags: ['希望', '信念', '勇气'], effects: ['confidence', 'people'], desc: '相片石（蔷薇辉石）带来希望与信念，增强勇气。', image: 'rhodonite.png', size: 1.0 },
+                        { id: 'tiger-eye', name: '海藻玉', tags: ['愉悦', '觉醒', '放松'], effects: ['confidence', 'steady-wealth'], desc: '海藻玉（虎眼石）带来愉悦与觉醒感，帮助放松。', image: 'tiger-eye.png', size: 1.05 },
+                        { id: 'sapphire', name: '蓝青石', tags: ['智慧', '纯净', '平衡'], effects: ['purify', 'career'], desc: '蓝青石助智慧开启，保持内心纯净与平衡。', image: 'sapphire.png', size: 0.95 },
+                        { id: 'strawberry', name: '草莓晶', tags: ['正缘', '正能量', '爱情'], effects: ['people', 'confidence'], desc: '草莓晶招正缘桃花，带来满满正能量。', image: 'strawberry.png', size: 1.0 },
+                        { id: 'moonstone', name: '月光石', tags: ['细腻', '疗愈', '直觉'], effects: ['purify', 'people'], desc: '月光石带来细腻疗愈之力，增强直觉与灵感。', image: 'moonstone.png', size: 1.0 },
+                        { id: 'jade', name: '翠晶', tags: ['招财', '果断', '自信'], effects: ['wealth', 'confidence'], desc: '翠晶（翡翠）主招财果断，增强自信与气场。', image: 'jade.png', size: 1.0 },
             { id: 'rosequartz', name: '粉晶', tags: ['魅力', '招桃花', '人缘'], effects: ['people', 'confidence'], desc: '粉晶招桃花、提升个人魅力与人缘。', gradient: 'radial-gradient(circle at 35% 30%, #ffe0e8, #f7b4b4 40%, #e89898 70%, #d87a7a)', texture: 'repeating-conic-gradient(from 0deg, transparent 0deg 18deg, rgba(255,255,255,0.1) 18deg 20deg)', size: 1.0 }
         ];
 
@@ -648,14 +628,9 @@
                 beadEl.style.height = beadSize + 'px';
                 beadEl.style.left = (x - beadSize / 2) + 'px';
                 beadEl.style.top = (y - beadSize / 2) + 'px';
-                beadEl.style.background = bead.gradient;
+                beadEl.style.background = `url(${bead.image}) center/cover no-repeat`;
                 beadEl.dataset.index = index;
                 beadEl.dataset.beadId = bead.id;
-
-                // Texture overlay
-                const textureEl = document.createElement('div');
-                textureEl.style.cssText = `position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;background:${bead.texture};pointer-events:none;`;
-                beadEl.appendChild(textureEl);
 
                 // Click to select
                 beadEl.onclick = (e) => {
@@ -713,12 +688,11 @@
                 const size = Math.round(baseSize * bead.size);
                 return `
                     <div class="pool-bead"
-                         style="width:${size}px;height:${size}px;background:${bead.gradient};"
+                         style="width:${size}px;height:${size}px;background:url(${bead.image}) center/cover no-repeat;"
                          draggable="true"
                          ondragstart="onDragStart(event, '${bead.id}')"
                          onclick="onPoolBeadClick('${bead.id}')"
                          title="${bead.name}">
-                        <div style="position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;background:${bead.texture};pointer-events:none;"></div>
                         <div class="label">${bead.name}</div>
                     </div>
                 `;
