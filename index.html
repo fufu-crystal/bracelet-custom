@@ -153,12 +153,21 @@
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .bead-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
         }
         .bead-slot.empty {
             background: #f0ece7 !important;
             border: 2px dashed #c8c0b5;
             box-shadow: none;
         }
+        .bead-slot.empty img { display: none; }
         .bead-slot:hover { transform: scale(1.12); }
         .bead-slot.highlight { border: 2px solid var(--success); animation: beadPop 0.3s ease; }
         @keyframes beadPop {
@@ -201,6 +210,15 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
             touch-action: none;
+            overflow: hidden;
+            background-color: transparent;
+        }
+        .pool-bead img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
         }
         .pool-bead:hover { transform: scale(1.15); z-index: 10; }
         .pool-bead:active { cursor: grabbing; }
@@ -622,7 +640,7 @@
                 beadEl.style.height = beadSize + 'px';
                 beadEl.style.left = (x - beadSize / 2) + 'px';
                 beadEl.style.top = (y - beadSize / 2) + 'px';
-                beadEl.style.background = `url(${bead.image}) center/cover no-repeat`;
+                beadEl.innerHTML = `<img src="${bead.image}" alt="${bead.name}">`;
                 beadEl.dataset.index = index;
                 beadEl.dataset.beadId = bead.id;
 
@@ -682,11 +700,12 @@
                 const size = Math.round(baseSize * bead.size);
                 return `
                     <div class="pool-bead"
-                         style="width:${size}px;height:${size}px;background:url(${bead.image}) center/cover no-repeat;"
+                         style="width:${size}px;height:${size}px;"
                          draggable="true"
                          ondragstart="onDragStart(event, '${bead.id}')"
                          onclick="onPoolBeadClick('${bead.id}')"
                          title="${bead.name}">
+                        <img src="${bead.image}" alt="${bead.name}">
                         <div class="label">${bead.name}</div>
                     </div>
                 `;
